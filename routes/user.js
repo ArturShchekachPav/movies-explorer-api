@@ -9,6 +9,6 @@ router.patch('/me', celebrate({
     email: Joi.string().required().email(),
     name: Joi.string().min(2).max(30).required(),
   }),
-}), updateUserData)
+}), updateUserData);
 
 module.exports = router;

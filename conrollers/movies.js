@@ -4,16 +4,14 @@ const IncorrectRequestError = require('../errors/incorrect-request-error');
 const NotFoundError = require('../errors/not-found-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
-const getMovies = (req, res, next) => {
-  return Movie.find({})
-    .then((movies) => res.send(movies))
-    .catch(next);
-};
+const getMovies = (req, res, next) => Movie.find({})
+  .then((movies) => res.send(movies))
+  .catch(next);
 
 const createMovie = (req, res, next) => {
   const _id = req.user;
 
-  return Movie.create({ ...req.body, owner: _id, })
+  return Movie.create({ ...req.body, owner: _id })
     .then((newMovie) => res.status(CREATED_CODE).send(newMovie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
