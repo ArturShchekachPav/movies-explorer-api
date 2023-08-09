@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const centralErrorHandler = require('./middlewares/central-error-handler');
@@ -43,11 +43,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.use(rateLimit({
-  max: 100,
-  windowMs: 15 * 60 * 100,
-  message: { message: 'Too many requests from this IP' },
-}));
+app.use(limiter);
 
 app.use(routes);
 
