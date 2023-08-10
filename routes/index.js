@@ -1,25 +1,14 @@
 const router = require('express').Router();
-const { Joi, celebrate } = require('celebrate');
+const { createUserValidation, loginValidation } = require('../utils/validation');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/not-found-error');
 const userRoutes = require('./user');
 const movieRoutes = require('./movie');
 const { createUser, login } = require('../conrollers/users');
 
-router.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().min(2).max(30).required(),
-  }),
-}), createUser);
+router.post('/signup', createUserValidation, createUser);
 
-router.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
+router.post('/signin', loginValidation, login);
 
 router.get('/signout', auth, (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });

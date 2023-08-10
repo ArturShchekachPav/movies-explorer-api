@@ -9,10 +9,11 @@ const limiter = require('./middlewares/limiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const centralErrorHandler = require('./middlewares/central-error-handler');
+const { DEV_DB_URL } = require('./utils/config');
 
 require('dotenv').config();
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000, DB_URL = DEV_DB_URL } = process.env;
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
