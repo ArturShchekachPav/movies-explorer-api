@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-// app.use(limiter);
+app.use(limiter);
 
 app.use(routes);
 
