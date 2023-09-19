@@ -43,8 +43,8 @@ const login = (req, res, next) => {
       );
 
       res.cookie('jwt', token, {
-        maxAge: 3600000 * 60 * 7,
-        httpOnly: true,
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: false,
         secure: true,
         sameSite: 'None',
       }).send({ message: authSuccessMessage });
