@@ -25,7 +25,8 @@ app.disable('etag');
 
 app.use(cors({
   origin: [
-    'localhost:3000',
+    'http://localhost:3005',
+    'http://localhost:3000',
   ],
   credentials: true,
 }));
@@ -44,7 +45,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.use(limiter);
+// app.use(limiter);
 
 app.use(routes);
 

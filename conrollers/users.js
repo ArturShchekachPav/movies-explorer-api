@@ -3,11 +3,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const {
   CREATED_CODE, authSuccessMessage, dublicateEmailErrorMessage, incorrectRequestErrorMessage,
-  userNotFoundMessage,
+  userNotFoundMessage, registerErrorMessage, updateUserErrorMessage
 } = require('../utils/constants');
 const ConflictError = require('../errors/conflict-error');
 const IncorrectRequestError = require('../errors/incorrect-request-error');
 const NotFoundError = require('../errors/not-found-error');
+const AuthError = require('../errors/auth-error');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -25,7 +26,7 @@ const createUser = (req, res, next) => {
       } else if (err.name === 'ValidationError') {
         next(new IncorrectRequestError(incorrectRequestErrorMessage));
       } else {
-        next(err);
+        next(new AuthError(registerErrorMessage));
       }
     });
 };
@@ -67,7 +68,7 @@ const updateUserData = (req, res, next) => {
       if (err.code === 11000) {
         next(new ConflictError(dublicateEmailErrorMessage));
       } else if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new IncorrectRequestError(incorrectRequestErrorMessage));
+        next(new IncorrectRequestError(updateUserErrorMessage));
       } else {
         next(err);
       }
