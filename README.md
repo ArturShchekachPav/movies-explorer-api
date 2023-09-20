@@ -8,4 +8,4 @@
 
 IP-адрес 158.160.109.203
 
-https://api.bestmoviesearcher.nomoreparties.co
+https://api.bestmoviesearcher.nomoredomainsrocks.ru
